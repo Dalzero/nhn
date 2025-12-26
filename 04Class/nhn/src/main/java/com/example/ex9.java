@@ -1,7 +1,7 @@
 package com.example;
 
-public class ex1 {
+public class ex9 {
     public static void main(String[] args) {
-        System.out.println("Ahoy");;
+        System.out.println("Hello from ex9");
     }
 }
