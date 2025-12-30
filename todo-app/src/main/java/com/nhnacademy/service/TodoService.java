@@ -14,9 +14,7 @@ public class TodoService {
     }
 
     // 전체 조회
-    public List<Todo> getAll() {
-        return todoList;
-    }
+    public List<Todo> getAll() {return todoList;}
 
     // 목록 출력
     public void printAll() {
@@ -29,13 +27,10 @@ public class TodoService {
         for (int i = 0; i < todoList.size(); i++) {
             Todo todo = todoList.get(i);
             String status = todo.isDone() ? "[완료]" : "[미완료]";
-            System.out.printf("%d. %s %s (%d시간)%n",
-                i + 1, status, todo.getTitle(), todo.getHours());
+            System.out.printf("[%d] | %s | (%d시간) | %s | %s | %s", todo.getId(), todo.getTitle(), todo.getHours(), todo.getCategory().getDisplayName(), todo.getPriority().getDisplayName(), status); // id, title, hour, category, priority, done
         }
     }
 
     // 개수 조회
-    public int count() {
-        return todoList.size();
-    }
+    public int count() {return todoList.size();}
 }

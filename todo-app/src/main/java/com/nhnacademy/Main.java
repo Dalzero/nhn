@@ -5,14 +5,16 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 
 import com.nhnacademy.model.Todo;
+import com.nhnacademy.service.TodoService;
 import com.nhnacademy.model.Category;
 import com.nhnacademy.model.Priority;
-import com.nhnacademy.service.TodoService;
+
 
 public class Main {
     public static void main(String[] args) {
         // service construction
         TodoService Service = new TodoService();
+
         // Exit loop flag
         boolean stopword = false;
 
@@ -52,13 +54,22 @@ public class Main {
                                 hoursInput = Integer.parseInt(reader.readLine());
                                 if (hoursInput < 0 || hoursInput >= 24) {
                                     System.out.println("0~23 사이의 값을 입력하세요.");
+                                    hoursInput = -1;
                                 }
                             } catch (NumberFormatException e) {
                                 System.out.println("유효한 정수를 입력하세요.");
                             }
                         }
 
-                        Todo todo = new Todo(titleInput, hoursInput);
+                        System.out.print("구분 (1.WORK, 2.STUDY, 3.PERSONAL, 4.HEALTH, 5.OTHER) > ");
+                        int categoryInput = Integer.parseInt(reader.readLine());
+                        Category category = Category.ReadNumber(categoryInput);
+
+                        System.out.print("중요도 (1.낮음, 2.보통, 3.높음) > ");
+                        int priorityInput = Integer.parseInt(reader.readLine());
+                        Priority priority = Priority.fromLevel(priorityInput);
+
+                        Todo todo = new Todo(titleInput, hoursInput, category, priority, null);
                         Service.add(todo);
 
                         System.out.println("등록 완료: ");
