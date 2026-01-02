@@ -27,7 +27,7 @@ public class TodoService {
         for (int i = 0; i < todoList.size(); i++) {
             Todo todo = todoList.get(i);
             String status = todo.isDone() ? "[완료]" : "[미완료]";
-            System.out.printf("[%d] | %s | (%d시간) | %s | %s | %s", todo.getId(), todo.getTitle(), todo.getHours(), todo.getCategory().getDisplayName(), todo.getPriority().getDisplayName(), status); // id, title, hour, category, priority, done
+            System.out.printf("[%d] %s | (%d시간) | %s | %s | %s\n", todo.getId(), todo.getTitle(), todo.getHours(), todo.getCategory().getDisplayName(), todo.getPriority().getDisplayName(), status); // id, title, hour, category, priority, done
         }
     }
 

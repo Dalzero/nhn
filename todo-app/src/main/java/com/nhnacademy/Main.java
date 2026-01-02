@@ -8,18 +8,15 @@ import com.nhnacademy.model.Todo;
 import com.nhnacademy.service.TodoService;
 import com.nhnacademy.model.Category;
 import com.nhnacademy.model.Priority;
-
+import com.nhnacademy.service.Except;
 
 public class Main {
     public static void main(String[] args) {
         // service construction
         TodoService Service = new TodoService();
 
-        // Exit loop flag
-        boolean stopword = false;
-
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
-            while (!stopword) {
+            while (true) {
                 System.out.println("\n=== TODO 앱 ===");
                 System.out.println("1. 등록");
                 System.out.println("2. 조회");
@@ -32,43 +29,22 @@ public class Main {
                 switch (input) {
                     case "0" -> {
                         System.out.println("프로그램을 종료합니다.");
-                        stopword = true;
+                        return;
                     }
 
                     case "1" -> {
                         System.out.println("\n=== TODO 등록 ===");
 
-                        String titleInput = null;
-                        while (titleInput == null || titleInput.trim().isEmpty()) {
-                            System.out.print("제목 > ");
-                            titleInput = reader.readLine();
-                            if (titleInput == null || titleInput.trim().isEmpty()) {
-                                System.out.println("제목은 비어 있을 수 없습니다.");
-                            }
-                        }
+                        String titleInput = Except.getStringInput("제목", reader);
 
-                        int hoursInput = -1;
-                        while (hoursInput < 0 || hoursInput >= 24) {
-                            try {
-                                System.out.print("예상 소요 시간(시간) > ");
-                                hoursInput = Integer.parseInt(reader.readLine());
-                                if (hoursInput < 0 || hoursInput >= 24) {
-                                    System.out.println("0~23 사이의 값을 입력하세요.");
-                                    hoursInput = -1;
-                                }
-                            } catch (NumberFormatException e) {
-                                System.out.println("유효한 정수를 입력하세요.");
-                            }
-                        }
-
-                        System.out.print("구분 (1.WORK, 2.STUDY, 3.PERSONAL, 4.HEALTH, 5.OTHER) > ");
-                        int categoryInput = Integer.parseInt(reader.readLine());
+                        int hoursInput = Except.getValidIntegerInput("예상 소요 시간(시간) > ", 0, 24, reader);
+                        
+                        int categoryInput = Except.getValidIntegerInput("구분 (1.WORK, 2.STUDY, 3.PERSONAL, 4.HEALTH, 5.OTHER) > ", 1, 6, reader);
                         Category category = Category.ReadNumber(categoryInput);
 
-                        System.out.print("중요도 (1.낮음, 2.보통, 3.높음) > ");
-                        int priorityInput = Integer.parseInt(reader.readLine());
+                        int priorityInput = Except.getValidIntegerInput("중요도 (1.낮음, 2.보통, 3.높음) > ", 1, 5, reader);
                         Priority priority = Priority.fromLevel(priorityInput);
-
+                        
                         Todo todo = new Todo(titleInput, hoursInput, category, priority, null);
                         Service.add(todo);
 
