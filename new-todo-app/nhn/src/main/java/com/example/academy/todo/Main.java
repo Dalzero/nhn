@@ -16,22 +16,18 @@ public class Main
 {
     public static void main( String[] args ) throws IOException{
         TodoService Service = new TodoService();
+        Service.loadFromFile();
 
         try(BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))){
             while(true){
-                System.out.println("=== TODO 앱 ===");
-                System.out.println("1. 등록");
-                System.out.println("2. 조회");
-                System.out.println("3. 수정");
-                System.out.println("4. 삭제");
-                System.out.println("0. 종료");
-                System.out.print("선택 > ");
+                Service.printMenu();
 
                 String Input = reader.readLine();
 
                 switch (Input) {
                     case "0" -> {
                         System.out.println("프로그램을 종료합니다.");
+                        Service.saveToFile();
                         return;
                     }
                     case "1" -> {
@@ -68,7 +64,7 @@ public class Main
                                     Service.printCategory();
                                 }
                                 case "3" -> {
-                                    Service.printPrority();
+                                    Service.printPriority();
                                 }
                                 default -> System.out.println("0부터 3 이내의 정수를 입력해주세요.");
                             }

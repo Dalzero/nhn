@@ -16,7 +16,7 @@ public enum Priority {
     }
 
     public int getLevel() {
-         return level;
+        return level;
     }
     public String getDisplayName() { 
         return displayName;
